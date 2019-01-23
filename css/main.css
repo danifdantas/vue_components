@@ -1,0 +1,27 @@
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.5s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 7px 14px;
+  background-color: purple;
+  border-radius: 40px;
+  transition: 0.3s ease;
+}
+
+.link:hover {
+  background-color: white;
+  color: purple;
+}
