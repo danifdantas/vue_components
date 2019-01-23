@@ -6,46 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Components Example</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.2/vue-router.min.js"></script>
   </head>
   <body>
     <main>
-      <nav>
-        <ul class="nav">
-          <li class="nav-item">Home</li>
-          <li class="nav-item">Users</li>
-          <li class="nav-item">Portfolio</li>
-          <li class="nav-item">Contact</li>
-        </ul>
-      </nav>
-      <article>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus,
-        tempora laudantium distinctio ipsa excepturi voluptatum enim omnis
-        nesciunt fugiat, totam, incidunt magni dicta. Placeat, neque voluptatem
-        vero perferendis odio tempora?
-      </article>
-      <h3>Our Team</h3>
-      <hr />
       <div id="app">
-        <user
-          first_name="Daniela"
-          last_name="Dantas"
-          role="Parent"
-          @passfuncallup="logMainMessage"
-        ></user>
-        <user first_name="Lizzy" last_name="Dantas" role="Child"></user>
+        <!-- the router view element is where the component get rendered when changing the address bar (the route) -->
+        <router-view> </router-view>
       </div>
     </main>
-    <!-- templates -->
-    <template id="activeuser">
-      <div>
-        <h3>{{ role }}</h3>
-        <p>
-          {{ first_name }} <span>{{ last_name }}</span>
-        </p>
-        <button v-on:click="logChildMsg">log child click</button>
-        <button v-on:click="runParentFunc">Run a parent function</button>
-      </div>
-    </template>
+
     <script src="js/main.js"></script>
   </body>
 </html>
