@@ -1,81 +1,50 @@
-(() => {
-  // component will go here
-  const HomePageComponent = {
-    template: "<h2> You are on the Home Page</h2>"
-  };
-  const UsersPageComponent = {
-    props: ["id"],
-    template: "#userList",
-    //this always needs to be a function in a component
-    data: function() {
-      return {
-        users: []
-      };
-    },
-    created: function() {
-      console.log("user component created!");
-      this.fetchUserData(this.id);
-    },
-    methods: {
-      fetchUserData(user) {
-        // debugger;
+// import components
+import LoginComponent from "./components/LoginComponent.js";
+import UsersComponent from "./components/UsersComponent.js";
+const routes = [
+  { path: "/", redirect: { name: "login" } },
+  { path: "/login", name: "login", component: LoginComponent },
+  { path: "/users", name: "users", component: UsersComponent }
+];
 
-        let url = `./includes/index.php?user=${user}`;
-        fetch(url)
-          .then(res => res.json())
-          .then(data => (this.users = data))
-          .catch(function(error) {
-            console.error(error);
-          });
-      }
+const router = new VueRouter({
+  routes
+});
+const vm = new Vue({
+  // el: "#app",
+
+  data: {
+    message: "sup from vue!",
+    authenticated: false,
+
+    mockAccount: {
+      username: "danidantas",
+      password: "123"
     }
-  };
-  const ContactPageComponent = {
-    template: "<h2> You are on the Contact Page</h2>"
-  };
-  const ErrorPageComponent = {
-    template: "<h2> Page not found</h2>"
-  };
-  const routes = [
-    { path: "/", name: "home", component: HomePageComponent },
-    {
-      path: "/users/:id",
-      name: "users",
-      component: UsersPageComponent,
-      props: true
-    },
-    { path: "/contact", name: "contact", component: ContactPageComponent },
-    { path: "/*", name: "error", component: ErrorPageComponent }
-  ];
+  },
 
-  const router = new VueRouter({
-    routes
-  });
-  const vm = new Vue({
-    el: "#app",
+  created: function() {
+    console.log("parent component is live");
+  },
 
-    data: {
-      message: "sup from vue!"
+  methods: {
+    setAuthenticated(status) {
+      this.authenticated = status;
     },
+    logout() {
+      this.authenticated = false;
+    }
+  },
 
-    created: function() {
-      console.log("parent component is live");
-    },
+  router: router
+}).$mount("#app");
 
-    methods: {
-      logParent(message) {
-        console.log("from the parent", message);
-      },
-      logMainMessage(message) {
-        console.log("called from inside a child, lives in the parent", message);
-      }
-    },
-
-    components: {
-      HomePageComponent: HomePageComponent,
-      UsersPageComponent: UsersPageComponent,
-      ContactPageComponent: ContactPageComponent
-    },
-    router: router
-  });
-})();
+// make the router check all of the routes and bounce back if we are not authenticated
+router.beforeEach((to, from, next) => {
+  console.log("router guard working!");
+  if (vm.authenticated === false) {
+    next("/login");
+  } else {
+    next();
+  }
+});
