@@ -24,13 +24,25 @@ export default {
     login() {
       // console.log("Trying to Login");
       if (this.input.username != "" && this.input.password != "") {
-        if (this.input.password === this.$parent.mockAccount.password) {
-          console.log("You are logged in!");
-          this.$emit("authenticated", true);
-          this.$router.replace({ name: "users" });
-        } else {
-          console.log("Log in Failed");
-        }
+        // do afetch here and check creds on the back end
+
+        let url = `./includes/index.php?username=${
+          this.input.username
+        }&&password=${this.input.password}`;
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            // console.log(url);
+            if (data[0] == false || data[0].length < 0) {
+              console.log("Authentication failed, try again");
+            } else {
+              this.$emit("authenticated", true);
+              this.$router.replace({ name: "users" });
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       } else {
         console.log("Username and password shouldn't be blank");
       }

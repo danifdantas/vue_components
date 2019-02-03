@@ -15,16 +15,16 @@ const vm = new Vue({
 
   data: {
     message: "sup from vue!",
-    authenticated: false,
+    authenticated: false
 
-    mockAccount: {
-      username: "danidantas",
-      password: "123"
-    }
+    // mockAccount: {
+    //   username: "danidantas",
+    //   password: "123"
+    // }
   },
 
   created: function() {
-    console.log("parent component is live");
+    // console.log("parent component is live");
   },
 
   methods: {
