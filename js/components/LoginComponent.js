@@ -32,7 +32,7 @@ export default {
         fetch(url)
           .then(res => res.json())
           .then(data => {
-            // console.log(url);
+            // console.log(data);
             if (data[0] == false || data[0].length < 0) {
               console.log("Authentication failed, try again");
             } else {
